@@ -22,7 +22,7 @@
     --container-color: #FFF;
 
     /*========== Font and typography ==========*/
-    --body-font: 'Poppins', sans-serif;;
+    --body-font: 'Inter', sans-serif;;
 
     /* .5rem = 8px, 1rem = 16px, 1.5rem = 24px ... */
     --big-font-size: 2rem;

@@ -174,12 +174,19 @@ function fitElementToParent(el, padding) {
 }
 
 var sphereAnimation = (function() {
-
   var sphereEl = document.querySelector('.sphere-animation');
+
+  // 🔴 Check if the element exists before proceeding
+  if (!sphereEl) {
+      console.warn("⚠️ Warning: .sphere-animation element not found. Skipping animation.");
+      return; // Stop execution if element doesn't exist
+  }
+
   var spherePathEls = sphereEl.querySelectorAll('.sphere path');
   var pathLength = spherePathEls.length;
   var hasStarted = false;
-  var aimations = [];
+  var animations = [];
+
 
   fitElementToParent(sphereEl);
 
@@ -272,28 +279,23 @@ var projectSwiper = new Swiper(".mySwiper", {
 
 
 /*==================== CONTACT FORM HANDLING WITH EMAILJS ====================*/
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function () {
   document.getElementById('contact-form').addEventListener('submit', function(event) {
       event.preventDefault(); // Prevent default form submission
 
-      // Validate form fields
+      console.log("Form submitted, processing...");
+
       let name = document.getElementById('name').value.trim();
       let email = document.getElementById('email').value.trim();
       let company = document.getElementById('company').value.trim();
       let message = document.getElementById('message').value.trim();
 
       if (name === '' || email === '' || message === '') {
-          alert('Please fill out all required fields.');
+          alert('⚠️ Please fill out all required fields.');
           return;
       }
 
-      // Check if EmailJS is initialized
-      if (!emailjs) {
-          alert('❌ EmailJS not found! Make sure it is loaded.');
-          return;
-      }
-
-      // Sending email using EmailJS
+      // Send email using EmailJS
       emailjs.send("service_kzoptx4", "template_7cackaj", {
           from_name: name,
           reply_to: email, 
@@ -301,13 +303,13 @@ document.addEventListener('DOMContentLoaded', function() {
           message: message
       }, "6MD58e4wDNQzYR9CY")
       .then(function(response) {
-          console.log("Email sent successfully: ", response);
+          console.log("✅ Email sent successfully:", response);
           alert('✅ Message sent successfully!');
-          document.getElementById('contact-form').reset(); // Reset form after success
+          document.getElementById('contact-form').reset();
       })
       .catch(function(error) {
+          console.error("❌ EmailJS Error: ", error);
           alert('❌ Failed to send message. Please try again later.');
-          console.error("EmailJS Error: ", error);
       });
   });
 });
